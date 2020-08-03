@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
@@ -29,6 +29,17 @@ function CadastroCategoria() {
       infosDoEvento.target.value,
     );
   }
+  useEffect(() => {
+    const URL_TOPISSIMA = 'http://localhost:8080/categoria';
+    // fetch retorna uma promisse
+    fetch(URL_TOPISSIMA)
+      .then(async (respostaDoServidor) => {
+        const resposta = await respostaDoServidor.json();
+        setCategorias([
+          ...resposta,
+        ]);
+      });
+  }, []);
   return (
     <PageDefault>
       <h1>
@@ -74,7 +85,11 @@ function CadastroCategoria() {
           Cadastrar
         </Button>
       </form>
-
+      {categorias.length === 0 && (
+      <div>
+        Loading...
+      </div>
+      )}
       <ul>
         {categorias.map((categoria) => (
           <li key={`${categoria.nome}`}>
