@@ -30,7 +30,9 @@ function CadastroCategoria() {
     );
   }
   useEffect(() => {
-    const URL_TOPISSIMA = 'http://localhost:8080/categoria';
+    const URL_TOPISSIMA = window.location.hostname.includes('localhost')
+      ? 'http://localhost:8080/categoria'
+      : 'https://poliflix.herokuapp.com/categoria';
     // fetch retorna uma promisse
     fetch(URL_TOPISSIMA)
       .then(async (respostaDoServidor) => {
