@@ -33,6 +33,7 @@ function CadastroVideo() {
         event.preventDefault();
 
         // eslint-disable-next-line max-len
+        // eslint-disable-next-line arrow-body-style
         const categoriaEscolhida = categorias.find((categoria) => {
           return categoria.titulo === values.categoria;
         });
