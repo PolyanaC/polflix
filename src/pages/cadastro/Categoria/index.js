@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
 import Button from '../../../components/Button';
+import useForm from '../../../hooks/useForm';
 
 function CadastroCategoria() {
   const valoresIniciais = {
@@ -10,29 +11,14 @@ function CadastroCategoria() {
     descricao: '',
     cor: '',
   };
+
+  const { handleChange, values, clearForm } = useForm(valoresIniciais);
   const [categorias, setCategorias] = useState([]);
-  const [values, setValues] = useState(valoresIniciais);
 
-  function setValue(chave, valor) {
-    // chave: nome, descricao, cor
-    setValues({
-      ...values,
-      [chave]: valor,
-    });
-  }
-
-  function handleChange(infosDoEvento) {
-    setValue(
-      // const { getAttribute, value } = infosDoEvento.target;
-
-      infosDoEvento.target.getAttribute('name'),
-      infosDoEvento.target.value,
-    );
-  }
   useEffect(() => {
     const URL_TOPISSIMA = window.location.hostname.includes('localhost')
-      ? 'http://localhost:8080/categoria'
-      : 'https://poliflix.herokuapp.com/categoria';
+      ? 'http://localhost:8080/categorias'
+      : 'https://poliflix.herokuapp.com/categorias';
     // fetch retorna uma promisse
     fetch(URL_TOPISSIMA)
       .then(async (respostaDoServidor) => {
@@ -45,7 +31,7 @@ function CadastroCategoria() {
   return (
     <PageDefault>
       <h1>
-        Cadastre de Categoria:
+        Cadastro de Categoria:
         {values.nome}
       </h1>
       <form onSubmit={function handleSubmit(infosDoEvento) {
@@ -55,14 +41,14 @@ function CadastroCategoria() {
           values,
         ]);
 
-        setValues(valoresIniciais);
+        clearForm();
       }}
       >
 
         <FormField
           label="Nome da Categoria"
           type="text"
-          name="nome"
+          name="titulo"
           value={values.nome}
           onChange={handleChange}
         />
